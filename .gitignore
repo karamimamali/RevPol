@@ -1,0 +1,86 @@
+# Byte-compiled files
+*.py[cod]
+__pycache__/
+
+# Virtual environments
+venv/
+.venv/
+ENV/
+env/
+build/
+dist/
+*.egg-info/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Logs and debug files
+*.log
+*.out
+*.err
+*.stackdump
+*.trace
+*.prof
+*.profile
+
+# OS generated files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+
+# Editor and IDE specific files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Testing and Coverage
+.coverage
+.tox/
+.pytest_cache/
+nosetests.xml
+coverage.xml
+*.cover
+
+# Packaging artifacts
+*.egg
+*.egg-info/
+*.whl
+
+# Temporary files and caches
+*.bak
+*.tmp
+*.temp
+*.old
+*.rej
+*.orig
+*.~*
+*.sqlite3
+*.sqlite
+
+# Static analysis tools
+.mypy_cache/
+.pyre/
+.pytype/
+.pdm/
+
+# Data and environment files
+*.env
+*.env.*
+*.dat
+*.json
+*.csv
+
+# Machine learning artifacts
+*.model
+*.h5
+*.pickle
+*.pkl
+*.ckpt
+
+# Ignore other large files
+*.tar
+*.zip
+*.gz
+*.bz2
+*.7z
