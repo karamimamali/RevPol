@@ -1,61 +1,55 @@
 import sys
+import operator
+import math
 
+OPS = {
+    '+': operator.add,
+    '-': operator.sub,
+    '*': operator.mul,
+    '/': operator.truediv,
+    '^': operator.pow
+}
 
-class Exp:
-    def __init__(self, path):
-        self.tokens = {}
-        self.path = path
+def evaluate_rpn(expression: str) -> float:
+    stack = []
+    tokens = expression.strip().split()
 
-    def scanner(self):
-        
-        with open(f'{self.path}', 'r', encoding='UTF-8') as f:
-            lines = f.readlines()
-            for line in lines:
-                var, _, exp = line.split(maxsplit=2)
-                self.tokens[var] = self.eval_exp(exp)
-                
+    for token in tokens:
+        if token in OPS:
+            if len(stack) < 2:
+                raise ValueError("Not enough operands")
+            b = stack.pop()
+            a = stack.pop()
+            result = OPS[token](a, b)
+            stack.append(result)
+        else:
+            try:
+                stack.append(float(token))
+            except ValueError:
+                raise ValueError(f"Invalid token: {token}")
 
-    def eval_exp(self,exp):
-        stack = []
-
-        for token in exp.split():
-            if token not in '+-*/':
-                if token.isdigit():
-                    stack.append(int(token))
-                elif token in self.tokens:
-                    stack.append(self.tokens[token])
-                
-
-
-            else:
-                rhs = stack.pop()
-                lhs = stack.pop()
-                if token ==  '+':
-                    stack.append(lhs + rhs)
-                elif token == '-':
-                    stack.append(lhs - rhs)
-                elif token == '*':
-                    stack.append(lhs * rhs)
-                elif token == '/':
-                    token.append(lhs / rhs)
-
+    if len(stack) != 1:
+        raise ValueError("Invalid RPN expression")
     
+    return stack[0]
 
-        return stack.pop()
-                
+def run():
+    filename = sys.argv[1]
+    try:
+        with open(filename, 'r') as file:
+            for line_number, line in enumerate(file, 1):
+                if line.strip() == '':
+                    continue
+                try:
+                    result = evaluate_rpn(line)
+                    print(f"Line {line_number}: {result}")
+                except Exception as e:
+                    print(f"Line {line_number} Error: {e}")
+    except FileNotFoundError:
+        print(f"File '{filename}' not found.")
 
-    
-    
-
-
-if __name__ == '__main__':
-    if len(sys.argv) != 2:
-        print('Usage: python revpol.py <filename>')
-
+if __name__ == "__main__":
+    if len(sys.argv) < 2:
+        print("Usage: python revpol.py <filename>")
     else:
-        path = sys.argv[1]
-        exp = Exp(path)
-        
-        exp.scanner()
-
-        print(exp.tokens)
+        run()
